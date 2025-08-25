@@ -5,9 +5,11 @@ const app = express();
 
 // const
 const TOKEN = process.env.LINE_ACCESS_TOKEN
+const hostname = "api.line.me"
+const webhookEndPoint = "/webhook"
+const endPoint = "/v2/bot/message/broadcast"
 const port = 3000
 const method = "POST"
-const endPoint = "https://api.line.me/v2/bot/message/reply"
 const headers = {
         'Content-Type': 'application/json',
         "Authorization": "Bearer " + TOKEN
@@ -25,9 +27,9 @@ const dataString = JSON.stringify({
         ]
 })
 const webhookOptions = {
-    hostname: "api.line.me",
-    path: "/v2/bot/message/broadcast",
-    method: "POST",
+    hostname: hostname,
+    path: endPoint,
+    method: port,
     headers: headers,
     body: dataString,
 }
@@ -43,7 +45,7 @@ app.use(
     })
 )
 
-app.post("/webhook", (req, res) => {
+app.post(webhookEndPoint, (req, res) => {
     const request = https.request(webhookOptions, (res) => {
         res.on("data", (d) => {
             process.stdout.write(d);
