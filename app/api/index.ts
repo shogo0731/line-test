@@ -3,7 +3,6 @@ import express from 'express';
 const app = express();
 
 // const
-const TOKEN = process.env.LINE_ACCESS_TOKEN
 const webhookEndPoint = "/webhook"
 const port = 3000
 
