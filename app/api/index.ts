@@ -1,38 +1,11 @@
-const express = require('express');
-const https = require('https');
+//groupIdを取得するため、webhookを利用
+import express from 'express';
 const app = express();
-
 
 // const
 const TOKEN = process.env.LINE_ACCESS_TOKEN
-const hostname = "api.line.me"
 const webhookEndPoint = "/webhook"
-const endPoint = "/v2/bot/message/broadcast"
 const port = 3000
-const method = "POST"
-const headers = {
-        'Content-Type': 'application/json',
-        "Authorization": "Bearer " + TOKEN
-    }
-const dataString = JSON.stringify({
-    messages: [
-            {
-                type: "text",
-                text: "Hello, user"
-            },
-            {
-                type: "text",
-                text: "May I help you?"
-            }
-        ]
-})
-const webhookOptions = {
-    hostname: hostname,
-    path: endPoint,
-    method: port,
-    headers: headers,
-    body: dataString,
-}
 
 
 // expressを利用したLINEボットサーバーを定義
@@ -44,24 +17,10 @@ app.use(
         extended: true,
     })
 )
-
 app.post(webhookEndPoint, (req, res) => {
-    const request = https.request(webhookOptions, (res) => {
-        res.on("data", (d) => {
-            process.stdout.write(d);
-        });
-    });
-
-    //エラーハンドリング
-    request.on("error", (err) => {
-        console.log(err);
-    })
-
-    request.write(dataString);
-    request.end();
-
+    console.log(req.body.events);
+    res.status(200).end();
 })
-
 app.listen(port, () => {
     console.log("Server ready on port 3000.");
 })

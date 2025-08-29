@@ -1,6 +1,8 @@
 {
   "dependencies": {
-    "express": "^5.1.0",
-    "vercel": "^41.0.2"
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0"
   }
 }
